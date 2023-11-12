@@ -1,6 +1,13 @@
 package org.ws_solutions.model;
 
-abstract public class Usuario {
+import org.ws_solutions.db.ConnectionDB;
+
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.UUID;
+
+public class Usuario {
     private String id;
     private String username;
     private String password;
@@ -31,4 +38,26 @@ abstract public class Usuario {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean validaLogin() {
+        String usernameUsuario = "\'" + this.getUsername() + "\'";
+        String passwordUsuario = "\'" + this.getPassword() + "\'";
+
+        String sql =  "SELECT * FROM usuarios WHERE username = " + usernameUsuario+ " AND password = " + passwordUsuario +";";
+        Connection con = ConnectionDB.conectar();
+        try {
+            ResultSet resultadoUsuario = con.createStatement().executeQuery(sql);
+            ConnectionDB.desconectar(con);
+            boolean usuarioEncontrado = resultadoUsuario.next();
+            return usuarioEncontrado;
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro de SQL ao validar o login do usuário. " + ex.getMessage());
+            ConnectionDB.desconectar(con);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Erro ao ao validar o login do usuário. " + ex.getMessage());
+            return false;
+        }
+    }
+
 }

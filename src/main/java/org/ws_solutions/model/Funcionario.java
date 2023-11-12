@@ -1,8 +1,15 @@
 package org.ws_solutions.model;
 
-import java.util.Date;
+import org.postgresql.util.OSUtil;
+import org.ws_solutions.db.ConnectionDB;
 
-public class Funcionario  extends Usuario {
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.Date;
+import java.util.UUID;
+
+public class Funcionario extends Usuario {
 
     private String id;
     private Cargo cargo;
@@ -56,8 +63,57 @@ public class Funcionario  extends Usuario {
         this.salario = salario;
     }
 
+    public boolean criar() {
+
+
+        String uuidUsuario = "\'" + UUID.randomUUID().toString() + "\'";
+        String usernameUsuario = "\'" + this.getUsername() + "\'";
+        String passwordUsuario = "\'" + this.getPassword() + "\'";
+
+        String insertUsuario = "INSERT INTO usuarios (id, username, password) " +
+                "VALUES (" + uuidUsuario + ", " + usernameUsuario + ", " + passwordUsuario + ")";
+
+
+        String uuidFuncionario = "\'" + UUID.randomUUID().toString() + "\'";
+        String uuidCargo = "\'" + "fbe4c65b-4e2a-4979-bd61-cfcab936b886" + "\'";
+        Double salarioFuncionario = this.getSalario();
+        String dataAdmissaoFuncionario = "\'" + this.getDataAdmissao().toString() + "\'";
+
+        //TODO Remover cargo default
+
+
+        String insertFuncionario = "INSERT INTO funcionario " +
+                "(id, usuarioid, cargoid, dataadmissao, datademissao, salario) " +
+                "VALUES " +
+                "(" + uuidFuncionario + ", " + uuidUsuario + ", " + uuidCargo + ", " + dataAdmissaoFuncionario + ", " + null + ", " + salarioFuncionario + ")";
+
+
+        System.out.println(insertUsuario);
+        System.out.println("=====================");
+        System.out.println(insertFuncionario);
+
+
+        Connection con = ConnectionDB.conectar();
+        try {
+            boolean resultadoUsuario = con.createStatement().execute(insertUsuario);
+            boolean resultadoFuncionario = con.createStatement().execute(insertFuncionario);
+            ConnectionDB.desconectar(con);
+            return resultadoUsuario && resultadoFuncionario;
+        } catch (SQLException ex) {
+            System.out.println("Ocorreu um erro ao inserir os dados do usuário" + ex.getMessage());
+            ConnectionDB.desconectar(con);
+            return false;
+        } catch (Exception ex) {
+            System.out.println("Erro ao inserir dados do Funcionario. " + ex.getMessage());
+            return false;
+        }
+
+
+    }
+
     /**
      * Se a data da demissão for anterior à data atual então o funcionário está demitido
+     *
      * @return
      */
     public boolean isDemitido() {

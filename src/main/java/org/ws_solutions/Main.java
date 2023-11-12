@@ -1,11 +1,13 @@
 package org.ws_solutions;
 
 import org.ws_solutions.db.ConnectionDB;
+import org.ws_solutions.model.Usuario;
+import org.ws_solutions.view.*;
+
+import javax.swing.*;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.SQLOutput;
-import java.util.logging.Logger;
 
 // Press Shift twice to open the Search Everywhere dialog and type `show whitespaces`,
 // then press Enter. You can now see whitespace characters in your code.
@@ -13,6 +15,29 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("******* Running Easy Pharma Application *******");
 
+
+        Principal.setUsuarioSessao(new Usuario());
+
+        Router router =  new Router();
+
+        JPanel telaInicial = new TelaInicial(router).telaInicial;
+        JPanel telaLogin = new TelaLogin(router).telaLogin;
+        JPanel telaCadastro = new TelaCadastro(router).telaCadastro;
+        JPanel telaPrincipal = new TelaPrincipal(router).telaPrincipal;
+        JPanel telaProdutos = new TelaProdutos(router).telaProdutos;
+
+        router.addComponent(telaInicial, "TelaInicial");
+        router.addComponent(telaLogin, "TelaLogin");
+        router.addComponent(telaCadastro, "TelaCadastro");
+        router.addComponent(telaPrincipal, "TelaPrincipal");
+        router.addComponent(telaProdutos, "TelaProdutos");
+
+        router.setVisible(true);
+
+        System.out.println("******* Closing Easy Pharma Application *******");
+    }
+
+    private void connectToDb(){
         Connection con = ConnectionDB.conectar();
 
         String query =  "SELECT * FROM usuarios";
@@ -31,9 +56,6 @@ public class Main {
 
 
         ConnectionDB.desconectar(con);
-
-
-        System.out.println("******* Closing Easy Pharma Application *******");
 
     }
 }
