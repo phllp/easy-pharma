@@ -70,7 +70,7 @@ public class Pedido {
 
         Connection con = ConnectionDB.conectar();
         try {
-            boolean resultado = con.createStatement().execute(insertPedido);
+            con.createStatement().execute(insertPedido);
 
             for (PedidoProduto produto: this.pedidoProduto) {
                 String uuidPedidoProduto = "\'" + UUID.randomUUID().toString() + "\'";
@@ -86,7 +86,7 @@ public class Pedido {
             }
 
             ConnectionDB.desconectar(con);
-            return resultado;
+            return true;
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro de SQL ao inserir os dados do Produto: " + ex.getMessage());
             ConnectionDB.desconectar(con);

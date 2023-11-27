@@ -19,8 +19,7 @@ public class TelaInicial extends TelaBase{
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                router.route("TelaPrincipalV2");
-//                router.route("TelaLogin");
+                router.route("TelaLogin");
             }
 
         });

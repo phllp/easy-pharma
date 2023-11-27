@@ -30,7 +30,7 @@
                 </constraints>
                 <properties>
                   <font size="28"/>
-                  <text value="Eazy Pharma"/>
+                  <text value="Eazy Pharma |"/>
                 </properties>
               </component>
               <component id="2e1df" class="javax.swing.JLabel">
