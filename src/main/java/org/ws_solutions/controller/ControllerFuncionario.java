@@ -12,7 +12,6 @@ public class ControllerFuncionario extends ControllerBase {
         Funcionario funcionario = new Funcionario();
         funcionario.setUsername(username);
         funcionario.setPassword(password);
-        //TODO: Adicionar a data e o cargo
         funcionario.setDataAdmissao(new Date());
         funcionario.setCargo(new Cargo());
         try {

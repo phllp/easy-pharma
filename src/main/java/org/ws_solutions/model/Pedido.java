@@ -51,7 +51,6 @@ public class Pedido {
     }
     
     public double getValorTotal() {
-        // TODO: 11/8/23 Implementar lógica
         return 0.0;
     }
 
@@ -59,14 +58,9 @@ public class Pedido {
         String uuidPedido = "\'" + UUID.randomUUID().toString() + "\'";
         String nomeCliente = "\'" + this.getNomeCliente() + "\'";
         String cpfCliente = "\'" + this.getCpfCliente() + "\'";
-//        Double precoProduto = this.getPreco();
 
         String insertPedido = "INSERT INTO pedido (id, nomecliente, cpfcliente) " +
                 "VALUES (" + uuidPedido + ", " + nomeCliente + ", " + cpfCliente + ")";
-
-        System.out.println("============= Insert Pedido =============");
-        System.out.println(insertPedido);
-
 
         Connection con = ConnectionDB.conectar();
         try {
@@ -78,9 +72,6 @@ public class Pedido {
 
                 String insertProdutoItem = "INSERT INTO pedidoproduto (id, idpedido, idproduto, quantidade) " +
                         "VALUES (" + uuidPedidoProduto + ", " + uuidPedido + ", " + uuidProduto + ", " + 1 + ")";
-
-                System.out.println("============= Insert Pedido Item =============");
-                System.out.println(insertProdutoItem);
 
                 con.createStatement().execute(insertProdutoItem);
             }

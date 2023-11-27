@@ -20,7 +20,6 @@ public class Funcionario extends Usuario {
     public Funcionario() {
     }
 
-    // TODO: 11/8/23 Conferir se esses overrides estão coerentes
     @Override
     public String getId() {
         return id;
@@ -64,8 +63,6 @@ public class Funcionario extends Usuario {
     }
 
     public boolean criar() {
-
-
         String uuidUsuario = "\'" + UUID.randomUUID().toString() + "\'";
         String usernameUsuario = "\'" + this.getUsername() + "\'";
         String passwordUsuario = "\'" + this.getPassword() + "\'";
@@ -79,19 +76,10 @@ public class Funcionario extends Usuario {
         Double salarioFuncionario = this.getSalario();
         String dataAdmissaoFuncionario = "\'" + this.getDataAdmissao().toString() + "\'";
 
-        //TODO Remover cargo default
-
-
         String insertFuncionario = "INSERT INTO funcionario " +
                 "(id, usuarioid, cargoid, dataadmissao, datademissao, salario) " +
                 "VALUES " +
                 "(" + uuidFuncionario + ", " + uuidUsuario + ", " + uuidCargo + ", " + dataAdmissaoFuncionario + ", " + null + ", " + salarioFuncionario + ")";
-
-
-        System.out.println(insertUsuario);
-        System.out.println("=====================");
-        System.out.println(insertFuncionario);
-
 
         Connection con = ConnectionDB.conectar();
         try {
@@ -111,13 +99,7 @@ public class Funcionario extends Usuario {
 
     }
 
-    /**
-     * Se a data da demissão for anterior à data atual então o funcionário está demitido
-     *
-     * @return
-     */
     public boolean isDemitido() {
-        // TODO: 11/8/23 Implementar a lógica de comparação das datas
         return this.getDataAdmissao() != null;
     }
 }

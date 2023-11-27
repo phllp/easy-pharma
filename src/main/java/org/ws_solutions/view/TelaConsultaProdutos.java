@@ -62,7 +62,6 @@ public class TelaConsultaProdutos extends TelaBase {
         });
     }
 
-
     /**
      * Carrega os cards do feed com as informações das competições registradas
      */
@@ -81,8 +80,6 @@ public class TelaConsultaProdutos extends TelaBase {
             feedArea.repaint();
         }
     }
-
-
 
     /**
      * Cria um componente com as informações de uma competição

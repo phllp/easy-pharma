@@ -8,7 +8,6 @@ import javax.swing.*;
 
 abstract class TelaBase {
     Router router;
-
     ControllerBase controllerBase;
 
     public TelaBase(Router router) {

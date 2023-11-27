@@ -25,7 +25,6 @@ public class TelaCadastrarProduto extends TelaBase {
             @Override
             public void actionPerformed(ActionEvent e) {
                 boolean sucesso = controller.adicionarProduto(nome.getText(), descricao.getText(), preco.getText(), quantidade.getText());
-                // TODO: 11/12/23 Avaliar o bug que retorna false mas o produto é inserido corretamente no banco de dados 
                 if (sucesso) {
                     JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
                     router.route("TelaConsultaProdutos");

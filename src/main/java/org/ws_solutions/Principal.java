@@ -1,6 +1,5 @@
 package org.ws_solutions;
 
-import org.ws_solutions.model.Pedido;
 import org.ws_solutions.model.Produto;
 import org.ws_solutions.model.Usuario;
 import org.ws_solutions.model.dtos.PedidoDto;

@@ -11,7 +11,7 @@ public class Router extends JFrame {
     private Container contentPane = getContentPane();
 
     public Router() {
-        setTitle("Easy Pharma");
+        setTitle("Eazy Pharma");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setExtendedState(JFrame.MAXIMIZED_BOTH);
 

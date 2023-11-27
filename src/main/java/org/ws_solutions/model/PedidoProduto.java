@@ -45,8 +45,7 @@ public class PedidoProduto {
 
         String sql = "SELECT * FROM pedidoproduto JOIN produto on pedidoproduto.idproduto = produto.id WHERE idpedido = \'" + pedidoId + "\'";
         Connection con = ConnectionDB.conectar();
-        System.out.println("*********************** SELECT PEDIDO PRODUTOS ***************************");
-        System.out.println(sql);
+
         try {
             ResultSet resultado = con.createStatement().executeQuery(sql);
             while (resultado.next()) {
@@ -61,9 +60,7 @@ public class PedidoProduto {
                 p.setPreco(preco);
                 p.setDescricao(descricaoProduto);
 
-
                 produtos.add(p);
-
             }
             ConnectionDB.desconectar(con);
             return produtos;
