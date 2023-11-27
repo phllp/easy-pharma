@@ -2,6 +2,7 @@ package org.ws_solutions.view;
 
 import org.ws_solutions.Principal;
 import org.ws_solutions.Router;
+import org.ws_solutions.controller.ControllerProduto;
 import org.ws_solutions.model.Produto;
 import org.ws_solutions.view.components.FeedCard;
 import org.ws_solutions.view.components.FeedLabel;
@@ -17,6 +18,8 @@ import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
 public class TelaConsultaProdutos extends TelaBase {
+
+    private ControllerProduto controller = new ControllerProduto();
     public JPanel telaConsultaProdutos;
     private JButton voltarBtn;
     private JPanel feedArea;
@@ -35,7 +38,7 @@ public class TelaConsultaProdutos extends TelaBase {
         cadastrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                router.route("TelaProdutos");
+                router.route("TelaCadastrarProduto");
             }
         });
 
@@ -88,9 +91,9 @@ public class TelaConsultaProdutos extends TelaBase {
      * @return FeedCard
      */
     private FeedCard createFeedCard(Produto produto) {
-        Border topBorder = new EmptyBorder(0, 20, 0, 0);
+        Border topBorder = new EmptyBorder(0, 20, 0, 20);
         Font nomeFont = new Font("Arial", Font.BOLD, 24);
-        Border defaultBorder = new EmptyBorder(0, 20, 0, 0);
+        Border defaultBorder = new EmptyBorder(0, 0, 0, 20);
         Font defaultFont = new Font("Arial", Font.BOLD, 14);
 
         String uuid = produto.getId();
@@ -123,6 +126,19 @@ public class TelaConsultaProdutos extends TelaBase {
             }
         });
 
+        JButton remover = new JButton();
+        remover.setText("Remover Produto");
+        remover.setName("removerProduto_" + uuid);
+
+        remover.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                controller.removerProduto(uuid);
+                loadFeed();
+                JOptionPane.showMessageDialog(null, Principal.getMessage());
+            }
+        });
+
         FeedCard card = new FeedCard(feedArea);
 
         card.add(nomeLabel);
@@ -130,6 +146,7 @@ public class TelaConsultaProdutos extends TelaBase {
         card.add(precoLabel);
         card.add(quantidadeLabel);
         card.add(detalhes);
+        card.add(remover);
         return card;
     }
 

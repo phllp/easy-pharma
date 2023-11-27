@@ -1,5 +1,6 @@
 package org.ws_solutions.model;
 
+import org.ws_solutions.Principal;
 import org.ws_solutions.db.ConnectionDB;
 
 import java.sql.Connection;
@@ -73,7 +74,7 @@ public class Produto {
 
         Connection con = ConnectionDB.conectar();
         try {
-            boolean resultado = con.createStatement().execute(insertProduto);
+            con.createStatement().execute(insertProduto);
 
             for (int i = 0; i < quantidade; i++) {
                 String uuidItem = "\'" + UUID.randomUUID().toString() + "\'";
@@ -81,7 +82,7 @@ public class Produto {
                         "VALUES (" + uuidItem + ", " + uuidProduto + ")";
                 con.createStatement().execute(insertProdutoItem);
             }
-            return resultado;
+            return true;
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro de SQL ao inserir os dados do Produto: " + ex.getMessage());
             return false;
@@ -132,7 +133,6 @@ public class Produto {
         String uuidProduto = "\'" + produto.getId().toString() + "\'";
 
         String sql = "SELECT COUNT(*) FROM produtoitem WHERE idproduto = " + uuidProduto + ";";
-        System.out.println(sql);
         Connection con = ConnectionDB.conectar();
         try {
             ResultSet resultado = con.createStatement().executeQuery(sql);
@@ -163,6 +163,27 @@ public class Produto {
             return true;
         } catch (SQLException ex) {
             System.out.println("Ocorreu um erro de SQL ao atualizar os dados do Produto: " + ex.getMessage());
+            return false;
+        } finally {
+            ConnectionDB.desconectar(con);
+        }
+    }
+
+    public boolean remover() {
+        String uuid = "\'" + this.getId() + "\'";
+
+        String sql = "DELETE FROM produtoitem WHERE idproduto = " + uuid + "; " +
+                     "DELETE FROM produto WHERE id = " + uuid + "";
+//        String sql = "DELETE FROM produto WHERE id = " + uuid + "";
+
+        Connection con = ConnectionDB.conectar();
+        try {
+            con.createStatement().execute(sql);
+            Principal.setMessage("Produto removido com sucesso.");
+            return true;
+        } catch (SQLException ex) {
+            Principal.setMessage("Não foi possível remover o registro de Produto pois ele já está relacionado a um Pedido.");
+            System.out.println("Ocorreu um erro de SQL ao remover os dados do Produto: " + ex.getMessage());
             return false;
         } finally {
             ConnectionDB.desconectar(con);

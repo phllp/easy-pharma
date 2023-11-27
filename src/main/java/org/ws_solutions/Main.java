@@ -24,7 +24,7 @@ public class Main {
         JPanel telaLogin = new TelaLogin(router).telaLogin;
         JPanel telaCadastro = new TelaCadastro(router).telaCadastro;
         JPanel telaPrincipal = new TelaPrincipal(router).telaPrincipal;
-        JPanel telaProdutos = new TelaProdutos(router).telaProdutos;
+        JPanel telaProdutos = new TelaCadastrarProduto(router).telaCadastrarProduto;
         JPanel telaRegistrarPedido = new TelaRegistrarPedido(router).telaRegistrarPedido;
         JPanel telaConsultarPedidos = new TelaConsultaPedidos(router).telaConsultarPedidos;
         JPanel telaPrincipalV2 = new TelaPrincipalV2(router).telaPrincipalV2;
@@ -38,7 +38,7 @@ public class Main {
         router.addComponent(telaLogin, "TelaLogin");
         router.addComponent(telaCadastro, "TelaCadastro");
         router.addComponent(telaPrincipal, "TelaPrincipal");
-        router.addComponent(telaProdutos, "TelaProdutos");
+        router.addComponent(telaProdutos, "TelaCadastrarProduto");
         router.addComponent(telaRegistrarPedido, "TelaRegistrarPedido");
         router.addComponent(telaConsultarPedidos, "TelaConsultaPedidos");
         router.addComponent(telaPrincipalV2, "TelaPrincipalV2");

@@ -41,4 +41,10 @@ public class ControllerProduto extends ControllerBase {
         }
         return produto.atualizar();
     }
+
+    public boolean removerProduto(String id){
+        Produto produto = new Produto();
+        produto.setId(id);
+        return produto.remover();
+    }
 }

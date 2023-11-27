@@ -11,6 +11,8 @@ public class Principal {
     private static Produto produtoSelecionado;
     private static PedidoDto pedidoSelecionado;
 
+    private static String message;
+
     public static Usuario getUsuarioSessao() {
         return usuarioSessao;
     }
@@ -33,5 +35,13 @@ public class Principal {
 
     public static void setPedidoSelecionado(PedidoDto pedidoSelecionado) {
         Principal.pedidoSelecionado = pedidoSelecionado;
+    }
+
+    public static String getMessage() {
+        return message;
+    }
+
+    public static void setMessage(String message) {
+        Principal.message = message;
     }
 }

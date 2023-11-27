@@ -7,10 +7,10 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class TelaProdutos extends TelaBase {
+public class TelaCadastrarProduto extends TelaBase {
 
     private ControllerProduto controller = new ControllerProduto();
-    public JPanel telaProdutos;
+    public JPanel telaCadastrarProduto;
     private JTextField nome;
     private JTextField descricao;
     private JTextField preco;
@@ -18,7 +18,7 @@ public class TelaProdutos extends TelaBase {
     private JButton voltarBtn;
     private JTextField quantidade;
 
-    public TelaProdutos(Router router) {
+    public TelaCadastrarProduto(Router router) {
         super(router);
 
         adicionarButton.addActionListener(new ActionListener() {
@@ -26,11 +26,12 @@ public class TelaProdutos extends TelaBase {
             public void actionPerformed(ActionEvent e) {
                 boolean sucesso = controller.adicionarProduto(nome.getText(), descricao.getText(), preco.getText(), quantidade.getText());
                 // TODO: 11/12/23 Avaliar o bug que retorna false mas o produto é inserido corretamente no banco de dados 
-//                if (sucesso) {
-//                    JOptionPane.showMessageDialog(null, "Sucesso");
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto.");
-//                }
+                if (sucesso) {
+                    JOptionPane.showMessageDialog(null, "Produto cadastrado com sucesso.");
+                    router.route("TelaConsultaProdutos");
+                } else {
+                    JOptionPane.showMessageDialog(null, "Erro ao cadastrar o produto.");
+                }
             }
         });
 
