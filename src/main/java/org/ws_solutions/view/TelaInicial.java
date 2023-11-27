@@ -18,8 +18,11 @@ public class TelaInicial extends TelaBase{
         loginBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                router.route("TelaLogin");
+
+                router.route("TelaPrincipalV2");
+//                router.route("TelaLogin");
             }
+
         });
 
         cadastrarBtn.addActionListener(new ActionListener() {

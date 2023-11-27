@@ -1,5 +1,6 @@
 package org.ws_solutions.view;
 
+import org.ws_solutions.Principal;
 import org.ws_solutions.Router;
 import org.ws_solutions.model.Produto;
 import org.ws_solutions.view.components.FeedCard;
@@ -15,39 +16,30 @@ import java.awt.event.ComponentEvent;
 import java.awt.event.ComponentListener;
 import java.util.ArrayList;
 
-public class TelaPrincipal extends TelaBase{
-    public JPanel telaPrincipal;
-    private JButton cadastrarProduto;
+public class TelaConsultaProdutos extends TelaBase {
+    public JPanel telaConsultaProdutos;
+    private JButton voltarBtn;
     private JPanel feedArea;
-    private JButton registrarPedidoBtn;
-    private JButton consultarPedidos;
+    private JButton cadastrarBtn;
 
-    public TelaPrincipal(Router router) {
+    public TelaConsultaProdutos(Router router) {
         super(router);
 
-        cadastrarProduto.addActionListener(new ActionListener() {
+        voltarBtn.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                router.route("TelaPrincipalV2");
+            }
+        });
+
+        cadastrarBtn.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 router.route("TelaProdutos");
             }
         });
 
-        registrarPedidoBtn.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                router.route("TelaRegistrarPedido");
-            }
-        });
-
-        consultarPedidos.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                router.route("TelaConsultarPedidos");
-            }
-        });
-
-
-        telaPrincipal.addComponentListener(new ComponentListener() {
+        telaConsultaProdutos.addComponentListener(new ComponentListener() {
             @Override
             public void componentResized(ComponentEvent e) {
             }
@@ -74,6 +66,7 @@ public class TelaPrincipal extends TelaBase{
     private void loadFeed() {
         feedArea.removeAll();
         feedArea.setLayout(new BoxLayout(feedArea, BoxLayout.Y_AXIS));
+        feedArea.setBorder(new EmptyBorder(20,0,0,0));
 
         ArrayList<Produto> produtos = Produto.buscarTodos();
 
@@ -95,9 +88,9 @@ public class TelaPrincipal extends TelaBase{
      * @return FeedCard
      */
     private FeedCard createFeedCard(Produto produto) {
-        Border topBorder = new EmptyBorder(5, 25, 5, 0);
+        Border topBorder = new EmptyBorder(0, 20, 0, 0);
         Font nomeFont = new Font("Arial", Font.BOLD, 24);
-        Border defaultBorder = new EmptyBorder(0, 10, 5, 0);
+        Border defaultBorder = new EmptyBorder(0, 20, 0, 0);
         Font defaultFont = new Font("Arial", Font.BOLD, 14);
 
         String uuid = produto.getId();
@@ -112,32 +105,32 @@ public class TelaPrincipal extends TelaBase{
         FeedLabel quantidadeLabel = new FeedLabel("Estoque: " + quantidade, defaultBorder, defaultFont);
 
         JButton detalhes = new JButton();
-        detalhes.setText("Detalhes");
-        detalhes.setName("detalhesEvento_" + uuid);
+        detalhes.setText("Alterar");
+        detalhes.setName("detalhesProduto_" + uuid);
+
         detalhes.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-//                Competicao comp = new Competicao();
-//                comp.setNome(nome);
-//                comp.setUuid(uuid);
-//                comp.setDataInicio(dataInicio);
-//                comp.setDataTermino(dataTermino);
-//                comp.setIdadeMaxima(idadeMaxima.intValue());
-//                comp.setIdadeMinima(idadeMinima.intValue());
-//                Principal.setCompeticaoSelecionada(comp);
-//
-//                router.route("TelaDetalheCompeticao");
+                router.route("TelaAlterarProduto");
                 System.out.println("Item Clicado: " + detalhes.getName());
+                Produto p = new Produto();
+                p.setId(uuid);
+                p.setPreco(preco);
+                p.setDescricao(descricao);
+                p.setNome(nome);
+
+                Principal.setProdutoSelecionado(p);
             }
         });
 
-        FeedCard card = new FeedCard();
+        FeedCard card = new FeedCard(feedArea);
 
         card.add(nomeLabel);
         card.add(descricaoLabel);
         card.add(precoLabel);
-        card.add(detalhes);
         card.add(quantidadeLabel);
+        card.add(detalhes);
         return card;
     }
+
 }
